@@ -14,7 +14,7 @@ namespace DataStructures.Tests.LinkedLists
             var list = CreateSequentialIntList();
 
             // Act / Assert
-            Assert.Throws<ArgumentOutOfRangeException>(() => list.RemoveFirst());
+            Assert.Throws<InvalidOperationException>(() => list.RemoveFirst());
         }
 
         [Fact]

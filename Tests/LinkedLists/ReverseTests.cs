@@ -1,4 +1,3 @@
-using System;
 using FluentAssertions;
 using Xunit;
 
@@ -13,7 +12,11 @@ namespace DataStructure.Tests.LinkedLists
             var list = CreateSequentialIntList();
 
             // Assert
-            Assert.ThrowsAny<InvalidOperationException>(() => list.Reverse());
+            list.Reverse();
+
+            // Arrange
+            list.GetFirst().Should().BeNull();
+            list.GetLast().Should().BeNull();
         }
 
         [Fact]

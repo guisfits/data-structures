@@ -58,7 +58,7 @@ namespace DataStructures.LinkedLists
         public void RemoveFirst()
         {
             if (IsEmpty())
-                throw new ArgumentOutOfRangeException();
+                throw new InvalidOperationException();
 
             if (_first == _last)
             {
@@ -77,7 +77,7 @@ namespace DataStructures.LinkedLists
         public void RemoveLast()
         {
             if (IsEmpty())
-                throw new ArgumentOutOfRangeException();
+                throw new InvalidOperationException();
 
             if (_first == _last)
             {
@@ -139,7 +139,22 @@ namespace DataStructures.LinkedLists
         public void Reverse()
         {
             if (IsEmpty())
-                throw new InvalidOperationException();
+                return;
+
+            var previous = _first;
+            var current = _first.Next;
+            while (current != null)
+            {
+                var next = current.Next;
+                current.Next = previous;
+
+                previous = current;
+                current = next;
+            }
+
+            _last = _first;
+            _last.Next = null;
+            _first = previous;
         }
 
         #region Private
