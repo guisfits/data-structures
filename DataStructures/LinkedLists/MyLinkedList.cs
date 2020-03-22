@@ -136,6 +136,12 @@ namespace DataStructures.LinkedLists
             return array;
         }
 
+        public void Reverse()
+        {
+            if (IsEmpty())
+                throw new InvalidOperationException();
+        }
+
         #region Private
 
         private bool IsEmpty()

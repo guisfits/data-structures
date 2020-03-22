@@ -1,5 +1,4 @@
 using DataStructure.Tests.LinkedLists;
-using DataStructures.LinkedLists;
 using FluentAssertions;
 using Xunit;
 
@@ -8,10 +7,13 @@ namespace DataStructures.Tests.LinkedLists
     public class AddFirstTests : Base
     {
         [Fact]
-        public void GivenAValue_WhenTheListIsEmpty_ShouldFirstAndLastHaveTheSameValue()
+        public void GivenAUniqueValue_WhenTheListIsEmpty_ShouldFirstAndLastHaveTheSameValue()
         {
             // Arrange
-            var list = CreateSequentialIntList(1);
+            var list = CreateSequentialIntList(0);
+
+            // Act
+            list.AddFirst(1);
 
             // Assert
             list.GetFirst().Should().NotBeNull().And.Be(1);
@@ -19,15 +21,34 @@ namespace DataStructures.Tests.LinkedLists
         }
 
         [Fact]
-        public void GivenSomeValues_WhenListContainMoreThanOneItem_ShouldHaveAExpecificValueOnTheEnd()
+        public void GivenTwoValues_WhenListContainMoreThanOneItem_ShouldFirstAndLastBeDifferent()
         {
             // Arrange
-            var list = CreateSequentialIntList(3);
+            var list = CreateSequentialIntList(0);
+
+            // Act
+            list.AddFirst(1);
+            list.AddFirst(0);
 
             // Assert
-            list.GetLast().Should().Be(3);
-            list.GetFirst().Should().NotBe(3);
+            list.GetFirst().Should().Be(0);
+            list.GetLast().Should().Be(1);
         }
 
+        [Fact]
+        public void GivenMoreThanTwoValues_WhenListContainMoreThanOneItem_ShouldFirstAndLastBeDifferent()
+        {
+            // Arrange
+            var list = CreateSequentialIntList(0);
+
+            // Act
+            list.AddFirst(3);
+            list.AddFirst(2);
+            list.AddFirst(1);
+
+            // Assert
+            list.GetFirst().Should().Be(1);
+            list.GetLast().Should().Be(3);
+        }
     }
 }
