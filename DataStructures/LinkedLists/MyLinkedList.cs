@@ -6,6 +6,12 @@ namespace DataStructures.LinkedLists
     {
         private Node _first;
         private Node _last;
+        private int _size;
+
+        public MyLinkedList()
+        {
+            _size = 0;
+        }
 
         public T? GetFirst()
         {
@@ -29,6 +35,8 @@ namespace DataStructures.LinkedLists
                 node.Next = _first;
                 _first = node;
             }
+
+            _size++;
         }
 
         public void AddLast(T value)
@@ -43,6 +51,8 @@ namespace DataStructures.LinkedLists
                 _last.Next = node;
                 _last = node;
             }
+
+            _size++;
         }
 
         public void RemoveFirst()
@@ -60,6 +70,8 @@ namespace DataStructures.LinkedLists
                 _first.Next = null;
                 _first = second;
             }
+
+            _size--;
         }
 
         public void RemoveLast()
@@ -77,6 +89,8 @@ namespace DataStructures.LinkedLists
                 _last = GetPrevious(_last);
                 _last.Next = null;
             }
+
+            _size--;
         }
 
         public bool Contains(T value)
@@ -103,18 +117,23 @@ namespace DataStructures.LinkedLists
 
         public int Size()
         {
-            if (IsEmpty())
-                return 0;
+            return _size;
+        }
 
-            var size = 0;
+        public T[] ToArray()
+        {
+            var array = new T[_size];
+
+            var index = 0;
             var current = _first;
             while (current != null)
             {
+                array[index] = current.Value;
                 current = current.Next;
-                size++;
+                index++;
             }
 
-            return size;
+            return array;
         }
 
         #region Private

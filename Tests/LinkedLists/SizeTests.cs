@@ -11,9 +11,23 @@ namespace DataStructures.Tests.LinkedLists
         {
             // Arrange
             var list = CreateSequentialIntList(3);
+            list.AddFirst(4);
+            list.RemoveFirst();
+            list.AddLast(5);
+            list.RemoveLast();
 
             // Arrange
             list.Size().Should().Be(3);
+        }
+
+        [Fact]
+        public void GivenAEmptyList_ShouldReturnZero()
+        {
+            // Arrange
+            var list = CreateSequentialIntList();
+
+            // Arrange
+            list.Size().Should().Be(0);
         }
     }
 }
