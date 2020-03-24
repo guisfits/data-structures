@@ -157,11 +157,61 @@ namespace DataStructures.LinkedLists
             _first = previous;
         }
 
+        public T? GetByIndexBackward(int quantity)
+        {
+            if (IsEmpty() || quantity <= 0)
+                return null;
+
+            if (quantity == 1)
+                return _last.Value;
+
+            var first = _first;
+            var second = GetDistancedNode(_first, quantity);
+            if (second == null) return null;
+
+            while (second != _last)
+            {
+                first = first.Next;
+                second = second.Next;
+            }
+
+            return first.Value;
+        }
+
+        public T GetMiddleValue()
+        {
+            if (IsEmpty())
+                return default(T);
+
+            var head = _first;
+            var tail = _first;
+
+            while (tail != _last && tail.Next != _last)
+            {
+                head = head.Next;
+                tail = tail.Next.Next;
+            }
+
+            return head.Value;
+        }
+
         #region Private
 
         private bool IsEmpty()
         {
             return _first == null;
+        }
+
+        private Node GetDistancedNode(Node start, int distance)
+        {
+            var next = start;
+            for (int i = 0; i < (distance - 1); i++)
+            {
+                if (next == null) break;
+                next = next.Next;
+            }
+
+            return next;
         }
 
         private Node GetPrevious(Node node)
@@ -180,23 +230,14 @@ namespace DataStructures.LinkedLists
 
         class Node
         {
-            public Node(T value)
+            public Node(T value, Node next = null)
             {
                 Value = value;
+                Next = next;
             }
 
             public T Value { get; set; }
             public Node Next { get; set; }
-
-            public bool IsPrevious(Node next)
-            {
-                return Next != null && Next == next;
-            }
-
-            public bool HasValue(T value)
-            {
-                return Value.Equals(value);
-            }
         }
 
         #endregion
