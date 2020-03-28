@@ -2,7 +2,7 @@ using DataStructures;
 using FluentAssertions;
 using Xunit;
 
-namespace Tests.Arrays
+namespace DataStructures.Tests.Arrays
 {
     public class Insert
     {

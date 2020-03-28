@@ -1,9 +1,9 @@
 using System;
-using DataStructure.Tests.LinkedLists;
+using DataStructures.Tests.LinkedLists;
 using FluentAssertions;
 using Xunit;
 
-namespace Tests.LinkedLists
+namespace DataStructures.Tests.LinkedLists
 {
     public class RemoveFirstTests : Base
     {

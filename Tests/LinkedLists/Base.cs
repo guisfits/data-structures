@@ -1,6 +1,6 @@
 using DataStructures.LinkedLists;
 
-namespace DataStructure.Tests.LinkedLists
+namespace DataStructures.Tests.LinkedLists
 {
     public abstract class Base
     {

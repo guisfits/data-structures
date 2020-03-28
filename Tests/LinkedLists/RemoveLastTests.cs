@@ -1,5 +1,5 @@
 using System;
-using DataStructure.Tests.LinkedLists;
+using DataStructures.Tests.LinkedLists;
 using FluentAssertions;
 using Xunit;
 

@@ -1,9 +1,8 @@
-using DataStructure.Tests.LinkedLists;
 using DataStructures.LinkedLists;
 using FluentAssertions;
 using Xunit;
 
-namespace Tests.LinkedLists
+namespace DataStructures.Tests.LinkedLists
 {
     public class ContainsTest : Base
     {

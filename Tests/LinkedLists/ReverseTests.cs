@@ -1,7 +1,7 @@
 using FluentAssertions;
 using Xunit;
 
-namespace DataStructure.Tests.LinkedLists
+namespace DataStructures.Tests.LinkedLists
 {
     public class ReverseTests : Base
     {
