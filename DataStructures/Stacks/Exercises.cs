@@ -7,13 +7,8 @@ namespace DataStructures.Stacks
 {
     public static class Exercises
     {
-        private static Tuple<char, char>[] keys = new Tuple<char, char>[]
-        {
-            new Tuple<char, char>('(', ')'),
-            new Tuple<char, char>('[', ']'),
-            new Tuple<char, char>('{', '}'),
-            new Tuple<char, char>('<', '>'),
-        };
+
+        #region ReveseString
 
         public static string ReverseString(string input)
         {
@@ -31,33 +26,55 @@ namespace DataStructures.Stacks
             return builder.ToString();
         }
 
+        #endregion
+
+        #region IsBalanced
+
+        private readonly static List<char> leftKeys = new List<char> { '(', '{', '[', '<' };
+        private readonly static List<char> rightKeys = new List<char> { ')', '}', ']', '>' };
+
         public static bool IsExpressionIsBalanced(string expression)
         {
-            if(string.IsNullOrEmpty(expression)) return false;
+            if (string.IsNullOrEmpty(expression))
+                return false;
 
             var stack = new Stack<char>();
             foreach (var item in expression)
             {
-                var key = keys.FirstOrDefault(x => x.Item1 == item || x.Item2 == item);
-                if (key == null) continue;
-
-                if (item == key.Item1)
+                if (IsLeftKey(item))
                 {
                     stack.Push(item);
-                    continue;
                 }
+                else if (IsRightKey(item))
+                {
+                    if (stack.Count == 0)
+                        return false;
 
-                if (stack.Count == 0 || item != key.Item2 || stack.Peek() != key.Item1)
-                {
-                    return false;
-                }
-                else
-                {
-                    stack.Pop();
+                    if (IsKeysMatch(stack.Peek(), item))
+                        stack.Pop();
+                    else
+                        return false;
                 }
             }
 
             return stack.Count == 0;
         }
+
+        private static bool IsRightKey(char key)
+        {
+            return rightKeys.Contains(key);
+        }
+
+        private static bool IsLeftKey(char key)
+        {
+            return leftKeys.Contains(key);
+        }
+
+        private static bool IsKeysMatch(char left, char right)
+        {
+            return leftKeys.IndexOf(left) == rightKeys.IndexOf(right);
+        }
+
+        #endregion
     }
 }

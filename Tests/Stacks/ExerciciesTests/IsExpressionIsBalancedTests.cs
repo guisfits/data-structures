@@ -32,7 +32,7 @@ namespace DataStructures.Tests.Stacks.ExercisesTests
         [InlineData("<<1 + 2>")]
         [InlineData("(1 + 2(")]
         [InlineData("]1 + 2]")]
-        [InlineData(">1 + 2<")]
+        [InlineData("}1 + 2{")]
         public void GivenAnInvalidExpression_ShouldReturnFalse(string expression)
         {
             // Act
