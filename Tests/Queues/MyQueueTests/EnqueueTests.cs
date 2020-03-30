@@ -31,5 +31,36 @@ namespace DataStructures.Tests.Queues.MyQueueTests
             // Assert
             queue.Peek().Should().NotBe(40);
         }
+
+        [Fact]
+        public void GivenAFullQueue_WhenTryToEnqueueANewItem_ShouldIncraseTheCapacity()
+        {
+            // Arrange
+            var queue = Create(3);
+
+            // Act
+            queue.Enqueue(40);
+
+            // Assert
+            queue.Capacity.Should().BeGreaterOrEqualTo(4);
+        }
+
+        [Fact]
+        public void GivenAFullQueue_WhenDequeueSomeItemsAndEnqueueAgain_ShouldIncreaseTheCapacity()
+        {
+            // Arrange
+            var queue = Create(3);
+
+            // Act
+            queue.Dequeue();
+            queue.Dequeue();
+            queue.Enqueue(40);
+            queue.Enqueue(50);
+            queue.Enqueue(60);
+
+            // Assert
+            queue.Count.Should().Be(4);
+            queue.Capacity.Should().BeGreaterOrEqualTo(4);
+        }
     }
 }

@@ -12,16 +12,24 @@ namespace DataStructures.Queues
 
         public MyQueue(int initialCapacity)
         {
-            if (initialCapacity < 1) initialCapacity = 1;
-
-            _capacity = initialCapacity;
-            _array = new T[initialCapacity];
+            Capacity = initialCapacity;
+            _array = new T[Capacity];
         }
 
         #endregion
 
-        // [10, 20, 30, 40, 50]
-        //  H               T
+        public int Count => _count;
+        public int Capacity
+        {
+            get => _capacity;
+            private set
+            {
+                if (value < 1)
+                    _capacity = 1;
+                else
+                    _capacity = value;
+            }
+        }
 
         public void Enqueue(T item)
         {
@@ -64,20 +72,27 @@ namespace DataStructures.Queues
             return _count == 0;
         }
 
-        public bool IsFull()
+        private bool IsFull()
         {
-            return _count == _capacity;
+            return (_tail + 1) == Capacity;
         }
+
         private void IncreaseCapacity()
         {
-            var newArray = new T[_capacity * 2];
-            for (int i = 0; i < _capacity; i++)
+            Capacity = _count * 2;
+
+            var newArray = new T[Capacity];
+            var newArrayIndex = 0;
+
+            for (int i = _head; i <= _tail; i++)
             {
-                newArray[i] = _array[i];
+                newArray[newArrayIndex] = _array[i];
+                newArrayIndex++;
             }
 
             _array = newArray;
-            _capacity *= 2;
+            _head = 0;
+            _tail = _count - 1;
         }
     }
 }
