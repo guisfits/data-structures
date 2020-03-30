@@ -8,7 +8,7 @@ namespace DataStructures.Tests.Queues.MyQueueTests
         {
             var queue = new MyQueue<int>(quantity);
 
-            for (int i = 0; i < quantity; i++)
+            for (int i = 1; i <= quantity; i++)
                 queue.Enqueue(i * 10);
 
             return queue;
