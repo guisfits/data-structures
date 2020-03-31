@@ -4,11 +4,11 @@ namespace DataStructures.Queues
     {
         #region Constructor / Fields
 
-        private T[] _array;
-        private int _capacity;
-        private int _head;
-        private int _tail;
-        private int _count;
+        protected T[] _array;
+        protected int _capacity;
+        protected int _head;
+        protected int _tail;
+        protected int _count;
 
         public MyQueue(int initialCapacity)
         {
@@ -22,7 +22,7 @@ namespace DataStructures.Queues
         public int Capacity
         {
             get => _capacity;
-            private set
+            protected set
             {
                 if (value < 1)
                     _capacity = 1;
@@ -31,7 +31,7 @@ namespace DataStructures.Queues
             }
         }
 
-        public void Enqueue(T item)
+        public virtual void Enqueue(T item)
         {
             if (IsFull())
                 IncreaseCapacity();
@@ -50,7 +50,7 @@ namespace DataStructures.Queues
             _count++;
         }
 
-        public T Dequeue()
+        public virtual T Dequeue()
         {
             var item = Peek();
             _head++;
@@ -59,7 +59,7 @@ namespace DataStructures.Queues
             return item;
         }
 
-        public T Peek()
+        public virtual T Peek()
         {
             if (IsEmpty())
                 throw new System.Exception();
@@ -67,17 +67,17 @@ namespace DataStructures.Queues
             return _array[_head];
         }
 
-        public bool IsEmpty()
+        public virtual bool IsEmpty()
         {
             return _count == 0;
         }
 
-        private bool IsFull()
+        protected virtual bool IsFull()
         {
             return (_tail + 1) == Capacity;
         }
 
-        private void IncreaseCapacity()
+        protected virtual void IncreaseCapacity()
         {
             Capacity = _count * 2;
 
