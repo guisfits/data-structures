@@ -1,0 +1,25 @@
+# Notes
+
+- A tree is a data-structure that stores elements in a hierarchy
+- In a `Binary Tree`, a node can have two children
+- Some common usage
+  - Represent hierarchical data
+  - Indexes of database
+  - Autocompletion
+  - Compilers
+  - Compression (JPEG, MP3)
+- The first node is called `root`
+- A bottom node without any children if called `leaf`
+- The height of a `leaf` node `0`. As we go up in the tree the height increase
+- The height is equal to the height of the root node.
+- In the root node, the `depth` is `0`.
+- The `deepest` of a Tree is max number of the edge to a leaf node
+- A `Binary Search Tree` is special type of tress that the values on the left is smaller and the right is greater than the value of the node itself
+- There some algorithms to traversing binary trees
+  - **Breadth First**
+    - **Level-Order**: Left to Right level by level
+  - **Depth First**
+    - **Pre-order**: _Root_, Left, Right
+    - **In-Order**: Left, _Root_, Right
+    - **Post-Order**: Lef, Right, _Root_
+- Lookup run in `o(log n)`, that means if you want find an item in a huge amount of data, `Binary Search Tree` will perform more than a Linear DataStructure - like Arrays or LinkedList.
