@@ -1,4 +1,5 @@
-using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace DataStructures.Tries
 {
@@ -26,8 +27,8 @@ namespace DataStructures.Tries
                 }
                 else
                 {
-                    current = current.AddChild(value);
-                    current.IsEndOfWorld = i == (characters.Length - 1);
+                    current.AddChild(value, isEndOfWorld : i == (characters.Length - 1));
+                    current = current.GetNode(value);
                 }
             }
         }
@@ -40,7 +41,7 @@ namespace DataStructures.Tries
             {
                 var value = characters[i];
 
-                if (current.NotContains(value))
+                if (!current.Contains(value))
                     return false;
 
                 if (i == (characters.Length - 1))
@@ -57,43 +58,35 @@ namespace DataStructures.Tries
 
         private class Node
         {
-            private static int ALPHABET_SIZE = 26;
-            public Node(char value)
+            private Dictionary<char, Node> _children;
+
+            public Node(char value, bool isEndOfWorld = false)
             {
                 Value = value;
-                IsEndOfWorld = false;
-                Children = new Node[ALPHABET_SIZE];
+                IsEndOfWorld = isEndOfWorld;
+                _children = new Dictionary<char, Node>();
             }
 
             public char Value { get; }
-            public Node[] Children { get; }
-            public bool IsEndOfWorld { get; set; }
+            public bool IsEndOfWorld { get; }
 
-            public Node AddChild(char value)
+            public void AddChild(char value, bool isEndOfWorld)
             {
-                var index = GetIndex(value);
-                Children[index] = new Node(value);
+                var node = new Node(value, isEndOfWorld);
+                _children.Add(value, node);
+            }
 
-                return Children[index];
+            public Node GetNode(char value)
+            {
+                Node node = null;
+                _children.TryGetValue(value, out node);
+
+                return node;
             }
 
             public bool Contains(char value)
             {
-                return GetNode(value) != null;
-            }
-
-            public bool NotContains(char value)
-            {
-                return Contains(value) == false;
-            }
-            public Node GetNode(char value)
-            {
-                return Children[GetIndex(value)];
-            }
-
-            private int GetIndex(char value)
-            {
-                return value - 'a';
+                return _children.ContainsKey(value);
             }
 
             public override string ToString()
