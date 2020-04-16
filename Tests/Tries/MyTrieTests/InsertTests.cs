@@ -7,7 +7,7 @@ namespace Tests.Tries.MyTrieTests
     public class InsertTests
     {
         [Fact]
-        public void GivenAWord_WhenTrieIsEmpty_ShouldCreateANewTree()
+        public void GivenAWord_WhenTrieIsEmpty_ShouldAddIt()
         {
             // Arrange
             var word = "test";
@@ -21,7 +21,7 @@ namespace Tests.Tries.MyTrieTests
         }
 
         [Fact]
-        public void GivenTwoWords_WhenTheyCross_ShouldTrieContainBoth()
+        public void GivenTwoWords_WhenTheyCross_ShouldContainsBoth()
         {
             // Arrange
             var word1 = "cat";
@@ -38,7 +38,7 @@ namespace Tests.Tries.MyTrieTests
         }
 
         [Fact]
-        public void GivenTwoWords_WhenTheyAreDistinct_ShouldContainBoth()
+        public void GivenTwoWords_WhenTheyAreDistinct_ShouldContainsBoth()
         {
             // Arrange
             var word1 = "cat";
@@ -67,31 +67,6 @@ namespace Tests.Tries.MyTrieTests
 
             // Assert
             trie.HasWord(word).Should().BeTrue();
-        }
-
-        [Fact]
-        public void GivenATrie_WhenTryToFindAInexistentWord_ShouldReturnFalse()
-        {
-            // Arrange
-            var word = "cat";
-            var search = "dog";
-            var trie = new MyTrie();
-
-            // Act
-            trie.Insert(word);
-
-            // Assert
-            trie.HasWord(search).Should().BeFalse();
-        }
-
-        [Fact]
-        public void GivenAEmptyTrie_WhenTryToFindAWord_ShouldReturnFalse()
-        {
-            // Arrange
-            var trie = new MyTrie();
-
-            // Assert
-            trie.HasWord("test").Should().BeFalse();
         }
     }
 }
