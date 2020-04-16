@@ -25,35 +25,81 @@ namespace DataStructures.Tries
                     current = current.GetNode(value);
                     continue;
                 }
-                else
-                {
-                    current.AddChild(value, isEndOfWorld : i == (characters.Length - 1));
-                    current = current.GetNode(value);
-                }
+
+                current.AddChild(value, isEndOfWorld : i == (characters.Length - 1));
+                current = current.GetNode(value);
             }
         }
 
         public bool HasWord(string word)
         {
-            var current = _root;
-            var characters = word.ToCharArray();
-            for (var i = 0; i < characters.Length; i++)
-            {
-                var value = characters[i];
+            if (string.IsNullOrEmpty(word))
+                return false;
 
+            var current = _root;
+            foreach (var value in word)
+            {
                 if (!current.Contains(value))
                     return false;
-
-                if (i == (characters.Length - 1))
-                {
-                    var node = current.GetNode(value);
-                    return node.IsEndOfWorld;
-                }
 
                 current = current.GetNode(value);
             }
 
-            return false;
+            return current.IsEndOfWorld;
+        }
+
+        public char[] GetAll()
+        {
+            var list = new List<char>();
+            InOrderTraverse(_root, list);
+
+            return list.ToArray();
+        }
+
+        public void Remove(string word)
+        {
+            var current = _root;
+            for (var i = 0; i < word.Length; i++)
+            {
+                var node = current.GetNode(word[i]);
+                if (node == null) return;
+
+                if (node.IsEndOfWorld)
+                {
+                    if (i == (word.Length - 1))
+                        node.IsEndOfWorld = false;
+                    else
+                        continue;
+                }
+
+                if (node.HasChildren())
+                {
+                    current = node;
+                    continue;
+                }
+                else
+                {
+                    current.RemoveChild(node.Value);
+                }
+            }
+        }
+
+        #region Privates
+
+        private void InOrderTraverse(Node node, List<char> letters)
+        {
+            letters.Add(node.Value);
+
+            foreach (var child in node.GetChildren())
+                InOrderTraverse(child, letters);
+        }
+
+        private void PostOrderTraverse(Node node, List<char> letters)
+        {
+            foreach (var child in node.GetChildren())
+                InOrderTraverse(child, letters);
+
+            letters.Add(node.Value);
         }
 
         private class Node
@@ -68,7 +114,7 @@ namespace DataStructures.Tries
             }
 
             public char Value { get; }
-            public bool IsEndOfWorld { get; }
+            public bool IsEndOfWorld { get; set; }
 
             public void AddChild(char value, bool isEndOfWorld)
             {
@@ -84,9 +130,24 @@ namespace DataStructures.Tries
                 return node;
             }
 
+            public Node[] GetChildren()
+            {
+                return _children.Values.ToArray();
+            }
+
             public bool Contains(char value)
             {
                 return _children.ContainsKey(value);
+            }
+
+            public bool HasChildren()
+            {
+                return _children.Any();
+            }
+
+            public void RemoveChild(char ch)
+            {
+                _children.Remove(ch);
             }
 
             public override string ToString()
@@ -94,5 +155,7 @@ namespace DataStructures.Tries
                 return Value.ToString();
             }
         }
+
+        #endregion
     }
 }
