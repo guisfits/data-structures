@@ -56,6 +56,14 @@ namespace DataStructures.Tries
             return list.ToArray();
         }
 
+        private void InOrderTraverse(Node node, List<char> letters)
+        {
+            letters.Add(node.Value);
+
+            foreach (var child in node.GetChildren())
+                InOrderTraverse(child, letters);
+        }
+
         public void Remove(string word)
         {
             var current = _root;
@@ -84,23 +92,45 @@ namespace DataStructures.Tries
             }
         }
 
+        public string[] AutoCompletion(string word)
+        {
+            if(string.IsNullOrEmpty(word)) 
+                return null;
+
+            var list = new List<string>();
+
+            var endOfWordNode = FindLastNodeOf(word);
+            AutoCompletion(endOfWordNode, word, list);
+
+            return list.ToArray();
+        }
+
+        private Node FindLastNodeOf(string word)
+        {
+            var wordArray = word.ToCharArray();
+            var index = 0;
+            Node node = _root;
+            while (index < wordArray.Length && node != null)
+            {
+                node = node.GetNode(wordArray[index]);
+                index++;
+            }
+
+            return node;
+        }
+
+        private void AutoCompletion(Node node, string word, List<string> words)
+        {
+            if (node == null) return;
+
+            if (node.IsEndOfWorld)
+                words.Add(word);
+
+            foreach (var child in node.GetChildren())
+                AutoCompletion(child, word + child.Value, words);
+        }
+
         #region Privates
-
-        private void InOrderTraverse(Node node, List<char> letters)
-        {
-            letters.Add(node.Value);
-
-            foreach (var child in node.GetChildren())
-                InOrderTraverse(child, letters);
-        }
-
-        private void PostOrderTraverse(Node node, List<char> letters)
-        {
-            foreach (var child in node.GetChildren())
-                InOrderTraverse(child, letters);
-
-            letters.Add(node.Value);
-        }
 
         private class Node
         {
