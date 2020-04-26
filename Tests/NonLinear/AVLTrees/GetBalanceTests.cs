@@ -7,7 +7,7 @@ namespace DataStructures.Tests.AVLTrees
     public class GetBalanceTests
     {
         [Fact]
-        public void GivenATree_WhenInsertThreeItemInAscendingOrder_ShouldBeRightHeavy()
+        public void GivenATree_WhenInsertThreeItemInAscendingOrder_ShouldSelfRebalance()
         {
             // Arrange
             var tree = new MyAVLTree();
@@ -17,11 +17,11 @@ namespace DataStructures.Tests.AVLTrees
             var balance = tree.GetBalance();
 
             // Assert
-            balance.Should().Be(MyAVLTree.Balance.RightHeavy);
+            balance.Should().Be(MyAVLTree.Balance.Balanced);
         }
 
         [Fact]
-        public void GivenATree_WhenInsertThreeItemInDescendingOrder_ShouldBeLeftHeavy()
+        public void GivenATree_WhenInsertThreeItemInDescendingOrder_ShouldSelfRebalance()
         {
             // Arrange
             var tree = new MyAVLTree();
@@ -31,7 +31,7 @@ namespace DataStructures.Tests.AVLTrees
             var balance = tree.GetBalance();
 
             // Assert
-            balance.Should().Be(MyAVLTree.Balance.LeftHeavy);
+            balance.Should().Be(MyAVLTree.Balance.Balanced);
         }
 
         [Fact]

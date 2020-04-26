@@ -175,7 +175,7 @@ namespace DataStructures.Graphs
                 if (visiting.Contains(edge))
                     return true;
 
-                if (HasCycle(edge, all, visiting, visiting))
+                if (HasCycle(edge, all, visiting, visited))
                     return true;
             }
 
