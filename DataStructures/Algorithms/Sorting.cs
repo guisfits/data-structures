@@ -1,3 +1,5 @@
+using System.Linq;
+
 namespace DataStructures.Algorithms
 {
     public static class Sorting
@@ -69,6 +71,22 @@ namespace DataStructures.Algorithms
             return array;
         }
 
+        public static void MergeSort(int[] array)
+        {
+            if(array == null || array.Length < 2)
+                return;
+
+            var middleIndex = array.Length / 2;
+
+            var left = array.Take(middleIndex).ToArray();
+            var right = array.Skip(middleIndex).Take(array.Length - middleIndex).ToArray();
+
+            MergeSort(left);
+            MergeSort(right);
+
+            Merge(left, right, array);
+        }
+
         #region Privates
 
         private static void Swap(int[] array, int indexA, int indexB)
@@ -76,6 +94,24 @@ namespace DataStructures.Algorithms
             var temp = array[indexA];
             array[indexA] = array[indexB];
             array[indexA + 1] = temp;
+        }
+
+        private static void Merge(int[] left, int[] right, int[] result) {
+            int i, j, k;
+            i = j = k = 0;
+
+            while(i < left.Length && k < right.Length) {
+                if(left[i] <= right[j])
+                    result[k++] = left[i++];
+                else
+                    result[k++] = right[j++];
+            }
+
+            while(i < left.Length)
+                result[k++] = left[i++];
+
+            while(j < right.Length)
+                result[k++] = right[j++];
         }
 
         #endregion
