@@ -73,7 +73,7 @@ namespace DataStructures.Algorithms
 
         public static void MergeSort(int[] array)
         {
-            if(array == null || array.Length < 2)
+            if (array == null || array.Length < 2)
                 return;
 
             var middleIndex = array.Length / 2;
@@ -87,31 +87,84 @@ namespace DataStructures.Algorithms
             Merge(left, right, array);
         }
 
-        #region Privates
-
-        private static void Swap(int[] array, int indexA, int indexB)
+        private static void Merge(int[] left, int[] right, int[] result)
         {
-            var temp = array[indexA];
-            array[indexA] = array[indexB];
-            array[indexA + 1] = temp;
-        }
-
-        private static void Merge(int[] left, int[] right, int[] result) {
             int i, j, k;
             i = j = k = 0;
 
-            while(i < left.Length && k < right.Length) {
-                if(left[i] <= right[j])
+            while (i < left.Length && k < right.Length)
+            {
+                if (left[i] <= right[j])
                     result[k++] = left[i++];
                 else
                     result[k++] = right[j++];
             }
 
-            while(i < left.Length)
+            while (i < left.Length)
                 result[k++] = left[i++];
 
-            while(j < right.Length)
+            while (j < right.Length)
                 result[k++] = right[j++];
+        }
+
+        public static void QuickSort(int[] array)
+        {
+            if (array == null || array.Length == 1)
+                return;
+
+            QuickSort(array, 0, array.Length - 1);
+        }
+
+        private static void QuickSort(int[] array, int startIndex, int endIndex)
+        {
+            if (startIndex >= endIndex)
+                return;
+
+            var partition = Partition(array, startIndex, endIndex);
+
+            QuickSort(array, startIndex, partition - 1);
+            QuickSort(array, partition + 1, endIndex);
+        }
+
+        private static int Partition(int[] array, int startIndex, int endIndex)
+        {
+            var pivot = array[endIndex];
+            var boundary = startIndex - 1;
+
+            for (int i = startIndex; i <= endIndex; i++)
+            {
+                if (array[i] <= pivot)
+                {
+                    boundary++;
+                    Swap(array, i, boundary);
+                }
+            }
+
+            return boundary;
+        }
+
+        public static int[] CountSort(int[] array, int max)
+        {
+            var countArray = new int[max + 1];
+
+            foreach (var value in array) 
+                countArray[value]++; 
+
+            var k = 0;
+            for (int i = 0; i < countArray.Length; i++)
+                for (int j = 0; j < countArray[i]; j++)
+                    array[k++] = i;
+
+            return array;
+        }
+
+        #region Helpers
+
+        private static void Swap(int[] array, int indexA, int indexB)
+        {
+            var temp = array[indexA];
+            array[indexA] = array[indexB];
+            array[indexB] = temp;
         }
 
         #endregion
