@@ -17,19 +17,27 @@ namespace DataStructures.Algorithms
 
         public static int BinarySearch(int[] array, int target)
         {
-            if(array == null || array.Length == 0)
+            if (array == null || array.Length == 0) 
                 return -1;
 
-            var middleIndex = array.Length / 2;
+            return BinarySearch(array, target, 0, array.Length - 1);
+        }
+
+        private static int BinarySearch(int[] array, int target, int left, int right)
+        {
+            if (left >= right)
+                return -1;
+
+            var middleIndex = (left + right) / 2;
             var middleValue = array[middleIndex];
 
-            if(middleValue == target)
+            if (middleValue == target)
                 return middleIndex;
 
-            if(middleIndex < target)            
-                return BinarySearch(array.Take(middleIndex + 1).ToArray(), target);
+            if (target < middleValue)
+                return BinarySearch(array, target, left, middleIndex - 1);
 
-            return BinarySearch(array.Skip(middleIndex + 1).Take(array.Length).ToArray(), target);
+            return BinarySearch(array, target, middleIndex + 1, right);
         }
     }
 }
